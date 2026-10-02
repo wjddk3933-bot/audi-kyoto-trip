@@ -2,6 +2,7 @@
   "name": "아우디 교토에 가다",
   "short_name": "아우디 교토",
   "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#f4f6f8",
   "theme_color": "#111827",

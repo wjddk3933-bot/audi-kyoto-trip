@@ -4,128 +4,182 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#111827">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="아우디 교토">
 <link rel="manifest" href="manifest.json">
 <title>아우디 교토에 가다</title>
 <style>
-:root{--bg:#f4f6f8;--card:#fff;--text:#111827;--muted:#6b7280;--line:#e5e7eb;--accent:#111827;--danger:#dc2626}
-*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif}
-.app{max-width:760px;margin:0 auto;padding:18px 14px 110px}
-header{padding:8px 4px 16px}.eyebrow{font-size:12px;color:var(--muted);font-weight:700;letter-spacing:.04em}.title{font-size:28px;font-weight:900;margin:5px 0}.sub{color:var(--muted);font-size:14px}
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:12px 0}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 2px 10px rgba(0,0,0,.03)}
-.kpi-label{font-size:12px;color:var(--muted);font-weight:700}.kpi{font-size:22px;font-weight:900;margin-top:6px}
-.section-title{font-size:17px;font-weight:900;margin:22px 2px 10px}.row{display:flex;justify-content:space-between;gap:8px;align-items:center}.muted{color:var(--muted)}
-.progress{height:10px;background:#eef0f3;border-radius:999px;overflow:hidden;margin-top:10px}.progress>div{height:100%;width:0;background:#111827;border-radius:999px}
-.actions{display:flex;gap:8px;position:sticky;bottom:14px;z-index:5;margin-top:20px}.btn{border:0;border-radius:14px;padding:13px 15px;font-weight:800;font-size:15px;cursor:pointer}.primary{background:#111827;color:#fff;flex:1}.secondary{background:#fff;border:1px solid var(--line)}
-table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:11px 5px;border-bottom:1px solid var(--line);text-align:left}th{color:var(--muted);font-size:11px}
-.empty{padding:28px 10px;text-align:center;color:var(--muted)}
-.member{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line)}.member:last-child{border-bottom:0}
-.badge{font-size:11px;padding:5px 8px;border-radius:999px;background:#f1f5f9;color:#475569}
-.btnsmall{padding:7px 9px;border:1px solid var(--line);background:#fff;border-radius:10px;font-size:12px;font-weight:700}
-.modal{position:fixed;inset:0;background:rgba(15,23,42,.5);display:none;align-items:flex-end;justify-content:center;z-index:20}.modal.show{display:flex}.sheet{width:min(760px,100%);max-height:92vh;overflow:auto;background:#fff;border-radius:24px 24px 0 0;padding:20px 16px calc(20px + env(safe-area-inset-bottom))}
-label{display:block;font-size:12px;font-weight:800;margin:12px 0 7px}input,select{width:100%;padding:12px 13px;border:1px solid var(--line);border-radius:12px;font-size:15px;background:#fff}
-.form-actions{display:flex;gap:8px;margin-top:18px}.form-actions button{flex:1}
-.chips{display:flex;flex-wrap:wrap;gap:8px}.chip input{display:none}.chip span{display:block;padding:9px 11px;border:1px solid var(--line);border-radius:999px;font-size:13px;cursor:pointer}.chip input:checked+span{background:#111827;color:#fff;border-color:#111827}
-.note{font-size:12px;color:var(--muted);line-height:1.5;margin-top:7px}.danger{color:var(--danger)}
-@media(min-width:700px){.grid{grid-template-columns:repeat(4,1fr)}}
+:root{--bg:#f4f6f8;--card:#fff;--text:#111827;--muted:#6b7280;--line:#e5e7eb;--dark:#111827;--danger:#dc2626;--ok:#047857;--warn:#b45309}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif}
+button,input,select,textarea{font:inherit}.app{max-width:860px;margin:0 auto;padding:16px 14px calc(96px + env(safe-area-inset-bottom))}
+header{padding:8px 3px 14px}.eyebrow{font-size:12px;color:var(--muted);font-weight:800;letter-spacing:.04em}.title{font-size:28px;font-weight:900;margin:4px 0}.sub{font-size:14px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:10px 0}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:15px;box-shadow:0 2px 10px rgba(0,0,0,.03)}
+.kpi-label{font-size:11px;color:var(--muted);font-weight:800}.kpi{font-size:21px;font-weight:900;margin-top:5px;word-break:keep-all}.section-title{font-size:17px;font-weight:900;margin:22px 2px 10px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px}.muted{color:var(--muted)}.progress{height:9px;background:#eef0f3;border-radius:999px;overflow:hidden;margin-top:9px}.progress>div{height:100%;background:#111827;border-radius:999px}
+.summary-list{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}.summary-item{padding:11px;border:1px solid var(--line);border-radius:13px}.summary-item span{display:block;font-size:11px;color:var(--muted);font-weight:800}.summary-item strong{display:block;font-size:16px;margin-top:3px}
+.tabs{display:flex;gap:7px;overflow:auto;padding-bottom:2px}.tab{white-space:nowrap;border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 11px;font-size:12px;font-weight:850}.tab.active{background:#111827;color:#fff;border-color:#111827}
+.btn{border:0;border-radius:13px;padding:11px 13px;font-weight:850;cursor:pointer}.primary{background:#111827;color:#fff}.secondary{background:#fff;border:1px solid var(--line)}.btnsmall{padding:7px 9px;border:1px solid var(--line);background:#fff;border-radius:10px;font-size:12px;font-weight:800;cursor:pointer}.danger{color:var(--danger)}
+.actions{position:sticky;bottom:11px;z-index:6;display:flex;gap:8px;margin-top:18px}.actions .primary{flex:1}.note{font-size:12px;color:var(--muted);line-height:1.5;margin-top:6px}.notice{padding:11px 12px;border-radius:12px;background:#f8fafc;font-size:12px;line-height:1.5;margin-top:10px}.notice.warn{background:#fff7ed;color:var(--warn)}.notice.ok{background:#ecfdf5;color:var(--ok)}
+table{width:100%;border-collapse:collapse;font-size:12px}th,td{padding:10px 5px;border-bottom:1px solid var(--line);vertical-align:top}th{font-size:10px;color:var(--muted);text-align:left}td.money{text-align:right;font-weight:850;white-space:nowrap}.empty{text-align:center;padding:30px 8px;color:var(--muted)}.type-badge{font-size:10px;padding:4px 6px;border-radius:7px;font-weight:800;background:#f1f5f9;display:inline-block}
+.modal{position:fixed;inset:0;background:rgba(15,23,42,.5);display:none;align-items:flex-end;justify-content:center;z-index:20}.modal.show{display:flex}.sheet{width:min(860px,100%);max-height:93vh;overflow:auto;background:#fff;border-radius:24px 24px 0 0;padding:20px 16px calc(20px + env(safe-area-inset-bottom))}
+label{display:block;font-size:12px;font-weight:850;margin:12px 0 6px}input,select,textarea{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--text)}textarea{min-height:75px;resize:vertical}
+.form-actions{display:flex;gap:8px;margin-top:18px}.form-actions>*{flex:1}.segment{display:flex;border:1px solid var(--line);border-radius:12px;padding:3px;background:#f8fafc}.segment button{flex:1;border:0;background:transparent;border-radius:9px;padding:9px 7px;font-size:13px;font-weight:850}.segment button.active{background:#111827;color:#fff}
+.inline-actions{display:flex;gap:5px;justify-content:flex-end;flex-wrap:wrap}.small-link{border:0;background:transparent;padding:0;font-size:12px;font-weight:800;cursor:pointer;color:var(--dark)}
+@media(min-width:700px){.grid{grid-template-columns:repeat(4,1fr)}.summary-list{grid-template-columns:repeat(4,1fr)}}
 </style>
 </head>
 <body>
 <div class="app">
-<header>
-<div class="eyebrow">KYOTO • 2박 3일</div>
-<div class="title">아우디 교토에 가다 🇯🇵</div>
-<div class="sub">공금으로 여행 경비를 관리해요</div>
-</header>
+<header><div class="eyebrow">KYOTO • 2박 3일</div><div class="title" id="appTitle">아우디 교토에 가다 🇯🇵</div><div class="sub">하나의 공금으로 원화와 엔화를 함께 관리해요</div></header>
 
 <div class="grid">
-  <div class="card"><div class="kpi-label">현재 공금</div><div class="kpi" id="fundKpi">¥0</div></div>
-  <div class="card"><div class="kpi-label">총 사용액</div><div class="kpi" id="spentKpi">¥0</div></div>
-  <div class="card"><div class="kpi-label">남은 공금</div><div class="kpi" id="remainKpi">¥0</div></div>
-  <div class="card"><div class="kpi-label">1인 초과부담</div><div class="kpi" id="shareKpi">¥0</div></div>
+  <div class="card"><div class="kpi-label">시작 공금</div><div class="kpi" id="startKpi">₩0</div></div>
+  <div class="card"><div class="kpi-label">현재 공금 잔액</div><div class="kpi" id="totalKpi">₩0</div></div>
+  <div class="card"><div class="kpi-label">원화 잔액</div><div class="kpi" id="krwKpi">₩0</div></div>
+  <div class="card"><div class="kpi-label">엔화 잔액</div><div class="kpi" id="jpyKpi">¥0</div></div>
 </div>
 
 <div class="card">
   <div class="row"><strong>공금 사용 현황</strong><span id="percent" class="muted">0%</span></div>
   <div class="progress"><div id="progress"></div></div>
-  <div class="note">공금이 부족해지면 초과분만 4명이 1/4씩 부담합니다.</div>
+  <div class="summary-list">
+    <div class="summary-item"><span>누적 사용액</span><strong id="spentKpi">₩0</strong></div>
+    <div class="summary-item"><span>오늘 사용액</span><strong id="todayKpi">₩0</strong></div>
+    <div class="summary-item"><span>평균 엔화 취득환율</span><strong id="avgRateKpi">-</strong></div>
+    <div class="summary-item"><span>엔화 총 인출</span><strong id="withdrawKpi">¥0</strong></div>
+  </div>
+  <div id="balanceNote" class="note"></div>
 </div>
 
-<div class="section-title">카테고리별 지출</div>
-<div class="card" id="categories"></div>
-
-<div class="section-title">지출 내역</div>
-<div class="card">
-  <div class="row" style="margin-bottom:10px"><span class="muted" id="countText">0건</span><button class="btnsmall" onclick="openFund()">공금 수정</button></div>
-  <div id="expenses"></div>
+<div class="section-title">내역 보기</div>
+<div class="tabs">
+  <button class="tab active" data-view="all" onclick="setView('all')">전체</button>
+  <button class="tab" data-view="today" onclick="setView('today')">오늘만</button>
+  <button class="tab" data-view="jpy" onclick="setView('jpy')">엔화 지출</button>
+  <button class="tab" data-view="krw" onclick="setView('krw')">원화 지출</button>
+  <button class="tab" data-view="withdraw" onclick="setView('withdraw')">ATM 인출</button>
+  <button class="tab" data-view="adjust" onclick="setView('adjust')">공금 변경</button>
 </div>
 
-<div class="section-title">멤버</div>
-<div class="card" id="members"></div>
+<div class="section-title">기록</div>
+<div class="card"><div id="records"></div></div>
 
-<div class="actions">
-  <button class="btn primary" onclick="openExpense()">＋ 지출 추가</button>
-  <button class="btn secondary" onclick="openSettings()">⚙️ 설정</button>
-</div>
+<div class="section-title">공금 변경</div>
+<div class="card"><div class="row"><div><strong>공금 추가/차감</strong><div class="note">여행 중 공금 자체가 바뀔 때만 사용하세요.</div></div><button class="btn secondary" onclick="openAdjust()">변경</button></div></div>
+
+<div class="actions"><button class="btn primary" onclick="openExpense()">＋ 지출 추가</button><button class="btn secondary" onclick="openWithdraw()">🏧 엔화 인출</button><button class="btn secondary" onclick="openSettings()">⚙️</button></div>
 </div>
 
-<div class="modal" id="expenseModal">
-<div class="sheet">
-<h3 style="margin:0 0 4px">지출 추가</h3><div class="note">이번 버전은 공금 사용만 관리하므로 누가 썼는지는 정산에 반영하지 않아요.</div>
-<label>날짜</label><input id="eDate" type="date">
-<label>카테고리</label><select id="eCat"><option>식비</option><option>교통</option><option>숙박</option><option>관광</option><option>쇼핑</option><option>기타</option></select>
-<label>내용</label><input id="eDesc" placeholder="예: 교토역 저녁">
-<label>금액 (JPY)</label><input id="eAmt" type="number" inputmode="numeric" min="0" step="1" placeholder="18000">
-<div class="form-actions"><button class="btn secondary" onclick="closeModal('expenseModal')">취소</button><button class="btn primary" onclick="saveExpense()">저장</button></div>
+<!-- 지출 -->
+<div class="modal" id="expenseModal"><div class="sheet">
+  <h3 id="expenseTitle" style="margin:0">지출 추가</h3><div class="note">원화/엔화 모두 같은 공금에서 사용합니다.</div>
+  <label>날짜</label><input id="eDate" type="date">
+  <label>통화</label><div class="segment" id="expenseCurrency"><button type="button" class="active" onclick="chooseExpenseCurrency('JPY')">JPY · 엔화</button><button type="button" onclick="chooseExpenseCurrency('KRW')">KRW · 원화</button></div>
+  <label id="eAmtLabel">금액 (JPY)</label><input id="eAmt" type="number" inputmode="numeric" min="0" step="1" placeholder="예: 18000">
+  <label>카테고리</label><select id="eCat"><option>식비</option><option>교통</option><option>숙박</option><option>관광</option><option>쇼핑</option><option>기타</option></select>
+  <label>내용</label><input id="eDesc" placeholder="예: 교토역 저녁">
+  <label>메모</label><textarea id="eMemo" placeholder="예: 예약금 / 영수증 번호 / 특이사항"></textarea>
+  <div id="expensePreview" class="notice"></div>
+  <div class="form-actions"><button class="btn secondary" onclick="closeModal('expenseModal')">취소</button><button class="btn primary" onclick="saveExpense()">저장</button></div>
 </div></div>
 
-<div class="modal" id="fundModal">
-<div class="sheet">
-<h3 style="margin:0 0 4px">공금 수정</h3><div class="note">공금 자체가 변동될 때 언제든 수정하세요. 기존 지출 내역은 유지됩니다.</div>
-<label>현재 공금 (JPY)</label><input id="fundInput" type="number" inputmode="numeric" min="0" step="1">
-<div class="form-actions"><button class="btn secondary" onclick="closeModal('fundModal')">취소</button><button class="btn primary" onclick="saveFund()">저장</button></div>
+<!-- ATM -->
+<div class="modal" id="withdrawModal"><div class="sheet">
+  <h3 id="withdrawTitle" style="margin:0">🏧 엔화 인출</h3><div class="note">ATM 인출은 공금의 통화를 원화에서 엔화로 바꾸는 거래예요. 환전 원금은 이중 차감하지 않고, 수수료만 실제 비용으로 남습니다.</div>
+  <label>날짜</label><input id="wDate" type="date">
+  <label>받은 엔화 (JPY)</label><input id="wJpy" type="number" inputmode="numeric" min="0" step="1" placeholder="50000">
+  <label>실제 계좌에서 빠진 원화 (KRW, 수수료 포함)</label><input id="wKrw" type="number" inputmode="numeric" min="0" step="1" placeholder="470000">
+  <label>그중 수수료 (KRW)</label><input id="wFee" type="number" inputmode="numeric" min="0" step="1" value="0" placeholder="5000">
+  <label>메모</label><textarea id="wMemo" placeholder="예: 세븐뱅크 ATM / 간사이공항 ATM"></textarea>
+  <div id="withdrawPreview" class="notice"></div>
+  <div class="form-actions"><button class="btn secondary" onclick="closeModal('withdrawModal')">취소</button><button class="btn primary" onclick="saveWithdraw()">저장</button></div>
 </div></div>
 
-<div class="modal" id="settingsModal">
-<div class="sheet">
-<h3 style="margin:0 0 4px">설정</h3>
-<label>모임명</label><input id="nameInput">
-<label>환율 (1 JPY = KRW)</label><input id="rateInput" type="number" inputmode="decimal" step="0.01">
-<label>멤버 이름</label>
-<div id="memberInputs"></div>
-<div class="note">데이터는 이 브라우저에 저장됩니다. 여행 중 같은 기기에서 계속 사용하세요.</div>
-<div class="form-actions"><button class="btn secondary" onclick="closeModal('settingsModal')">취소</button><button class="btn primary" onclick="saveSettings()">저장</button></div>
+<!-- 설정 -->
+<div class="modal" id="settingsModal"><div class="sheet">
+  <h3 style="margin:0">⚙️ 기본 설정</h3>
+  <label>모임명</label><input id="sName">
+  <label>시작 공금 (KRW)</label><input id="sFund" type="number" inputmode="numeric" min="0" step="1">
+  <label>멤버</label><div id="memberInputs"></div>
+  <div class="notice">현재 기본값: ₩1,032,818 / 정아 · 진희 · 솔아 · 은비</div>
+  <div class="form-actions"><button class="btn secondary" onclick="closeModal('settingsModal')">취소</button><button class="btn primary" onclick="saveSettings()">저장</button></div>
+</div></div>
+
+<!-- 공금 조정 -->
+<div class="modal" id="adjustModal"><div class="sheet">
+  <h3 id="adjustTitle" style="margin:0">공금 추가/차감</h3>
+  <label>날짜</label><input id="aDate" type="date">
+  <label>금액 (KRW)</label><input id="aAmount" type="number" inputmode="numeric" min="0" step="1" placeholder="50000">
+  <label>구분</label><div class="segment" id="adjustMode"><button type="button" class="active" onclick="chooseAdjustMode('add')">공금 추가</button><button type="button" onclick="chooseAdjustMode('remove')">공금 차감</button></div>
+  <label>메모</label><textarea id="aMemo" placeholder="예: 여행 중 추가 입금"></textarea>
+  <div class="form-actions"><button class="btn secondary" onclick="closeModal('adjustModal')">취소</button><button class="btn primary" onclick="saveAdjust()">저장</button></div>
 </div></div>
 
 <script>
-const KEY="audiKyotoTripV2";
-const defaults={name:"아우디 교토에 가다",fund:1032818,rate:9.2,members:["정아","진희","솔아","은비"],expenses:[]};
+const KEY='audiKyotoTripFinalV3', LEGACY='audiKyotoTripV2';
+const today=()=>new Date().toISOString().slice(0,10);
+const won=n=>'₩'+new Intl.NumberFormat('ko-KR').format(Math.round(n||0));
+const yen=n=>'¥'+new Intl.NumberFormat('ja-JP').format(Math.round(n||0));
+const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+const DEFAULT={name:'아우디 교토에 가다',startFundKrw:1032818,members:['정아','진희','솔아','은비'],expenses:[],withdrawals:[],adjustments:[]};
+let viewMode='all',expenseCurrency='JPY',adjustMode='add',editExpenseId=null,editWithdrawId=null,editAdjustId=null;
+
+function normalize(s){return {name:s.name||DEFAULT.name,startFundKrw:Number(s.startFundKrw??DEFAULT.startFundKrw),members:Array.isArray(s.members)&&s.members.length===4?s.members:DEFAULT.members,expenses:Array.isArray(s.expenses)?s.expenses.map(e=>({id:String(e.id||Date.now()),date:e.date||today(),currency:e.currency||'JPY',amount:Number(e.amount||0),category:e.category||'기타',desc:e.desc||'지출',memo:e.memo||''})):[],withdrawals:Array.isArray(s.withdrawals)?s.withdrawals.map(w=>({id:String(w.id||Date.now()),date:w.date||today(),jpy:Number(w.jpy||0),krw:Number(w.krw||0),fee:Number(w.fee||0),memo:w.memo||''})):[],adjustments:Array.isArray(s.adjustments)?s.adjustments.map(a=>({id:String(a.id||Date.now()),date:a.date||today(),amount:Number(a.amount||0),mode:a.mode==='remove'?'remove':'add',memo:a.memo||''})):[]};}
+function load(){try{const n=localStorage.getItem(KEY);if(n)return normalize(JSON.parse(n));const old=localStorage.getItem(LEGACY);if(old){const o=JSON.parse(old);return normalize({name:o.name,startFundKrw:DEFAULT.startFundKrw,members:DEFAULT.members,expenses:(o.expenses||[]).map(e=>({id:'m'+e.id,date:e.date||today(),currency:'JPY',amount:Number(e.amount||0),category:e.category||'기타',desc:e.desc||'지출',memo:'기존 기록'}))})}}catch(e){}return JSON.parse(JSON.stringify(DEFAULT));}
 let state=load();
-function load(){try{return Object.assign({},defaults,JSON.parse(localStorage.getItem(KEY)||"{}"))}catch(e){return {...defaults}}}
-function persist(){localStorage.setItem(KEY,JSON.stringify(state)); render();}
-const yen=n=>new Intl.NumberFormat('ja-JP').format(Math.round(n||0));
-function render(){
-document.title=state.name;
-document.querySelector('.title').textContent=state.name+" 🇯🇵";
-const spent=state.expenses.reduce((s,e)=>s+Number(e.amount||0),0), remain=state.fund-spent, over=Math.max(0,-remain), share=Math.ceil(over/state.members.length);
-fundKpi.textContent="¥"+yen(state.fund); spentKpi.textContent="¥"+yen(spent); remainKpi.textContent=(remain<0?"-":"")+"¥"+yen(Math.abs(remain)); shareKpi.textContent="¥"+yen(share);
-const pct=state.fund?Math.round(spent/state.fund*100):0; percent.textContent=pct+"%"; progress.style.width=Math.min(100,pct)+"%";
-const cats={}; state.expenses.forEach(e=>cats[e.category]=(cats[e.category]||0)+Number(e.amount||0));
-categories.innerHTML=Object.keys(cats).length?Object.entries(cats).map(([k,v])=>`<div style="margin:9px 0"><div class="row"><span>${k}</span><strong>¥${yen(v)}</strong></div><div class="progress"><div style="width:${spent?Math.round(v/spent*100):0}%"></div></div></div>`).join(""):`<div class="empty">아직 지출이 없어요.</div>`;
-countText.textContent=state.expenses.length+"건";
-expenses.innerHTML=state.expenses.length?`<table><thead><tr><th>날짜</th><th>내용</th><th>분류</th><th style="text-align:right">금액</th><th></th></tr></thead><tbody>${[...state.expenses].reverse().map(e=>`<tr><td>${e.date}</td><td>${esc(e.desc)}</td><td>${e.category}</td><td style="text-align:right">¥${yen(e.amount)}</td><td style="text-align:right"><button class="btnsmall danger" onclick="removeExpense('${e.id}')">삭제</button></td></tr>`).join("")}</tbody></table>`:`<div class="empty">지출을 추가해 보세요 😊</div>`;
-members.innerHTML=state.members.map(m=>`<div class="member"><span>👤 ${esc(m)}</span><span class="badge">공금 공동부담</span></div>`).join("");
+function persist(){localStorage.setItem(KEY,JSON.stringify(state));render();}
+function calc(){
+  const totalWithdrawJpy=state.withdrawals.reduce((s,w)=>s+Number(w.jpy||0),0);
+  const totalConversionKrw=state.withdrawals.reduce((s,w)=>s+Math.max(0,Number(w.krw||0)-Number(w.fee||0)),0);
+  const avgRate=totalWithdrawJpy?totalConversionKrw/totalWithdrawJpy:0;
+  const jpySpent=state.expenses.filter(e=>e.currency==='JPY').reduce((s,e)=>s+Number(e.amount||0),0);
+  const krwSpent=state.expenses.filter(e=>e.currency==='KRW').reduce((s,e)=>s+Number(e.amount||0),0);
+  const fees=state.withdrawals.reduce((s,w)=>s+Number(w.fee||0),0);
+  const adj=state.adjustments.reduce((s,a)=>s+(a.mode==='remove'?-1:1)*Number(a.amount||0),0);
+  const totalWithdrawKrw=state.withdrawals.reduce((s,w)=>s+Number(w.krw||0),0);
+  const krwBalance=state.startFundKrw+adj-totalWithdrawKrw-krwSpent;
+  const jpyBalance=totalWithdrawJpy-jpySpent;
+  const totalBalance=krwBalance+jpyBalance*avgRate;
+  const totalSpent=krwSpent+fees+jpySpent*avgRate;
+  const tJ=state.expenses.filter(e=>e.date===today()&&e.currency==='JPY').reduce((s,e)=>s+Number(e.amount||0),0);
+  const tK=state.expenses.filter(e=>e.date===today()&&e.currency==='KRW').reduce((s,e)=>s+Number(e.amount||0),0);
+  const tF=state.withdrawals.filter(w=>w.date===today()).reduce((s,w)=>s+Number(w.fee||0),0);
+  return {totalWithdrawJpy,totalConversionKrw,avgRate,jpySpent,krwSpent,fees,adj,krwBalance,jpyBalance,totalBalance,totalSpent,todaySpent:tK+tF+tJ*avgRate};
 }
-function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
-function openExpense(){eDate.value=new Date().toISOString().slice(0,10);eDesc.value="";eAmt.value="";expenseModal.classList.add("show")}
-function openFund(){fundInput.value=state.fund;fundModal.classList.add("show")}
-function openSettings(){nameInput.value=state.name;rateInput.value=state.rate;memberInputs.innerHTML=state.members.map((m,i)=>`<div style="display:flex;gap:8px;margin:6px 0"><input data-mi="${i}" value="${esc(m)}" style="flex:1"></div>`).join("");settingsModal.classList.add("show")}
-function closeModal(id){document.getElementById(id).classList.remove("show")}
-function saveExpense(){const amount=Number(eAmt.value); if(!amount||amount<0){alert("금액을 입력해 주세요.");return} state.expenses.push({id:Date.now().toString(),date:eDate.value||new Date().toISOString().slice(0,10),category:eCat.value,desc:eDesc.value.trim()||"지출",amount}); persist(); closeModal("expenseModal")}
-function removeExpense(id){state.expenses=state.expenses.filter(e=>e.id!==id);persist()}
-function saveFund(){const v=Number(fundInput.value); if(v<0||Number.isNaN(v)){alert("공금을 확인해 주세요.");return} state.fund=v;persist();closeModal("fundModal")}
-function saveSettings(){state.name=nameInput.value.trim()||defaults.name;state.rate=Number(rateInput.value)||defaults.rate;state.members=[...document.querySelectorAll("[data-mi]")].map(x=>x.value.trim()).filter(Boolean);if(state.members.length!==4){alert("멤버는 4명으로 유지해 주세요.");return}persist();closeModal("settingsModal")}
-render();
-if("serviceWorker" in navigator){navigator.serviceWorker.register("sw.js").catch(()=>{})}
+function render(){
+  const c=calc();appTitle.textContent=state.name+' 🇯🇵';startKpi.textContent=won(state.startFundKrw);totalKpi.textContent=won(c.totalBalance);krwKpi.textContent=won(c.krwBalance);jpyKpi.textContent=yen(c.jpyBalance);spentKpi.textContent=won(c.totalSpent);todayKpi.textContent=won(c.todaySpent);avgRateKpi.textContent=c.avgRate?`₩${c.avgRate.toFixed(2)}/¥`:'-';withdrawKpi.textContent=yen(c.totalWithdrawJpy);
+  const basis=state.startFundKrw+c.adj,used=basis-c.totalBalance,pct=basis>0?Math.round(used/basis*100):0;percent.textContent=Math.max(-999,Math.min(999,pct))+'%';progress.style.width=Math.min(100,Math.max(0,pct))+'%';
+  balanceNote.innerHTML=c.totalBalance<0?'<span style="color:#dc2626">⚠️ 공금 전체가 부족한 상태예요.</span>':'원화와 엔화는 하나의 공금으로 계산됩니다. ATM 환전 원금은 이중 차감하지 않고 수수료만 비용으로 잡아요.';
+  document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.view===viewMode));renderRecords();
+}
+function records(){let r=[];state.expenses.forEach(e=>r.push({...e,kind:'expense'}));state.withdrawals.forEach(w=>r.push({...w,kind:'withdraw'}));state.adjustments.forEach(a=>r.push({...a,kind:'adjust'}));r.sort((a,b)=>String(b.date).localeCompare(String(a.date))||String(b.id).localeCompare(String(a.id)));return r.filter(x=>viewMode==='today'?x.date===today():viewMode==='jpy'?x.kind==='expense'&&x.currency==='JPY':viewMode==='krw'?x.kind==='expense'&&x.currency==='KRW':viewMode==='withdraw'?x.kind==='withdraw':viewMode==='adjust'?x.kind==='adjust':true)}
+function renderRecords(){const rows=records();if(!rows.length){recordsEl('<div class="empty">아직 기록이 없어요 😊</div>');return}let h='<div class="row" style="margin-bottom:10px"><span class="muted" style="font-size:12px">'+rows.length+'건</span><span class="muted" style="font-size:12px">수정/삭제 가능</span></div><div style="overflow:auto"><table><thead><tr><th>날짜</th><th>내용</th><th>금액</th><th>메모/구분</th><th></th></tr></thead><tbody>';
+  for(const r of rows){const d=r.date===today()?'오늘':r.date;
+    if(r.kind==='expense')h+=`<tr><td>${esc(d)}</td><td><b>${esc(r.desc)}</b><div class="muted">${esc(r.category)}</div></td><td class="money">${r.currency==='JPY'?yen(r.amount):won(r.amount)}</td><td><span class="type-badge">${r.currency==='JPY'?'엔화 지출':'원화 지출'}</span>${r.memo?`<div class="note">${esc(r.memo)}</div>`:''}</td><td><div class="inline-actions"><button class="btnsmall" onclick="editExpense('${esc(r.id)}')">수정</button><button class="btnsmall danger" onclick="deleteExpense('${esc(r.id)}')">삭제</button></div></td></tr>`;
+    else if(r.kind==='withdraw'){const base=Math.max(0,Number(r.krw||0)-Number(r.fee||0)),rate=r.jpy?base/r.jpy:0;h+=`<tr><td>${esc(d)}</td><td><b>ATM 엔화 인출</b><div class="muted">${yen(r.jpy)} 수령</div></td><td class="money">${won(r.krw)}<div class="note">수수료 ${won(r.fee)}</div></td><td><span class="type-badge">환전 원금 ${won(base)}</span><div class="note">취득환율 ₩${rate.toFixed(2)}/¥</div>${r.memo?`<div class="note">${esc(r.memo)}</div>`:''}</td><td><div class="inline-actions"><button class="btnsmall" onclick="editWithdraw('${esc(r.id)}')">수정</button><button class="btnsmall danger" onclick="deleteWithdraw('${esc(r.id)}')">삭제</button></div></td></tr>`}
+    else h+=`<tr><td>${esc(d)}</td><td><b>공금 ${r.mode==='add'?'추가':'차감'}</b></td><td class="money">${won(r.amount)}</td><td><span class="type-badge">공금 변경</span>${r.memo?`<div class="note">${esc(r.memo)}</div>`:''}</td><td><div class="inline-actions"><button class="btnsmall" onclick="editAdjust('${esc(r.id)}')">수정</button><button class="btnsmall danger" onclick="deleteAdjust('${esc(r.id)}')">삭제</button></div></td></tr>`;
+  }h+='</tbody></table></div>';recordsEl(h)}
+function recordsEl(html){document.getElementById('records').innerHTML=html}
+function setView(v){viewMode=v;render()}function openModal(id){document.getElementById(id).classList.add('show')}function closeModal(id){document.getElementById(id).classList.remove('show')}
+function chooseExpenseCurrency(c){expenseCurrency=c;document.querySelectorAll('#expenseCurrency button').forEach((b,i)=>b.classList.toggle('active',(i===0&&c==='JPY')||(i===1&&c==='KRW')));eAmtLabel.textContent='금액 ('+c+')';eAmt.placeholder=c==='JPY'?'예: 18000':'예: 30000';updateExpensePreview()}
+function updateExpensePreview(){const v=Number(eAmt.value||0),c=calc();if(!v){expensePreview.textContent='';return}expensePreview.textContent=expenseCurrency==='KRW'?`공금에서 원화 ${won(v)}가 차감됩니다.`:`공금에서 엔화 ${yen(v)}가 차감됩니다. 평균 취득환율 기준 약 ${won(v*(c.avgRate||0))}입니다.`}
+eAmt.addEventListener('input',updateExpensePreview);
+function openExpense(id=null){editExpenseId=id;const e=id?state.expenses.find(x=>x.id===id):null;expenseTitle.textContent=e?'지출 수정':'지출 추가';eDate.value=e?.date||today();eAmt.value=e?.amount||'';eCat.value=e?.category||'식비';eDesc.value=e?.desc||'';eMemo.value=e?.memo||'';chooseExpenseCurrency(e?.currency||'JPY');openModal('expenseModal')}
+function saveExpense(){const amount=Number(eAmt.value);if(!(amount>0)){alert('금액을 입력해 주세요.');return}const obj={id:editExpenseId||'e'+Date.now(),date:eDate.value||today(),currency:expenseCurrency,amount,category:eCat.value,desc:eDesc.value.trim()||'지출',memo:eMemo.value.trim()};if(editExpenseId){const i=state.expenses.findIndex(x=>x.id===editExpenseId);if(i>=0)state.expenses[i]=obj}else state.expenses.push(obj);persist();closeModal('expenseModal')}
+function editExpense(id){openExpense(id)}function deleteExpense(id){if(confirm('이 지출을 삭제할까요?')){state.expenses=state.expenses.filter(x=>x.id!==id);persist()}}
+function updateWithdrawPreview(){const j=Number(wJpy.value||0),k=Number(wKrw.value||0),f=Number(wFee.value||0);if(!j&&!k){withdrawPreview.textContent='';return}const base=Math.max(0,k-f),rate=j?base/j:0;withdrawPreview.innerHTML=`받은 엔화 <b>${yen(j)}</b> / 실제 원화 출금 <b>${won(k)}</b><br>환전 원금 <b>${won(base)}</b> + 수수료 <b>${won(f)}</b><br>취득환율 <b>₩${rate.toFixed(2)}/¥</b><br><span class="muted">공금 전체 잔액은 수수료만큼 줄고, 원화→엔화로 바뀐 원금은 통화만 이동합니다.</span>`}
+wJpy.addEventListener('input',updateWithdrawPreview);wKrw.addEventListener('input',updateWithdrawPreview);wFee.addEventListener('input',updateWithdrawPreview);
+function openWithdraw(id=null){editWithdrawId=id;const w=id?state.withdrawals.find(x=>x.id===id):null;withdrawTitle.textContent=id?'🏧 엔화 인출 수정':'🏧 엔화 인출';wDate.value=w?.date||today();wJpy.value=w?.jpy||'';wKrw.value=w?.krw||'';wFee.value=w?.fee??0;wMemo.value=w?.memo||'';updateWithdrawPreview();openModal('withdrawModal')}
+function saveWithdraw(){const jpy=Number(wJpy.value),krw=Number(wKrw.value),fee=Number(wFee.value||0);if(!(jpy>0)||!(krw>0)||fee<0||fee>krw){alert('엔화, 원화 출금액, 수수료를 확인해 주세요.');return}const obj={id:editWithdrawId||'w'+Date.now(),date:wDate.value||today(),jpy,krw,fee,memo:wMemo.value.trim()};if(editWithdrawId){const i=state.withdrawals.findIndex(x=>x.id===editWithdrawId);if(i>=0)state.withdrawals[i]=obj}else state.withdrawals.push(obj);persist();closeModal('withdrawModal')}
+function editWithdraw(id){openWithdraw(id)}function deleteWithdraw(id){if(confirm('이 ATM 인출 기록을 삭제할까요?')){state.withdrawals=state.withdrawals.filter(x=>x.id!==id);persist()}}
+function chooseAdjustMode(m){adjustMode=m;document.querySelectorAll('#adjustMode button').forEach((b,i)=>b.classList.toggle('active',(i===0&&m==='add')||(i===1&&m==='remove')))}
+function openAdjust(id=null){editAdjustId=id;const a=id?state.adjustments.find(x=>x.id===id):null;adjustTitle.textContent=id?'공금 변경 수정':'공금 추가/차감';aDate.value=a?.date||today();aAmount.value=a?.amount||'';aMemo.value=a?.memo||'';chooseAdjustMode(a?.mode||'add');openModal('adjustModal')}
+function saveAdjust(){const amount=Number(aAmount.value);if(!(amount>0)){alert('금액을 입력해 주세요.');return}const obj={id:editAdjustId||'a'+Date.now(),date:aDate.value||today(),amount,mode:adjustMode,memo:aMemo.value.trim()};if(editAdjustId){const i=state.adjustments.findIndex(x=>x.id===editAdjustId);if(i>=0)state.adjustments[i]=obj}else state.adjustments.push(obj);persist();closeModal('adjustModal')}
+function editAdjust(id){openAdjust(id)}function deleteAdjust(id){if(confirm('이 공금 변경 기록을 삭제할까요?')){state.adjustments=state.adjustments.filter(x=>x.id!==id);persist()}}
+function openSettings(){sName.value=state.name;sFund.value=state.startFundKrw;memberInputs.innerHTML=state.members.map((m,i)=>`<label style="margin:7px 0 4px">${i+1}번째</label><input data-mi="${i}" value="${esc(m)}">`).join('');openModal('settingsModal')}
+function saveSettings(){const fund=Number(sFund.value),ms=[...document.querySelectorAll('[data-mi]')].map(x=>x.value.trim());if(!(fund>=0)||ms.length!==4||ms.some(x=>!x)){alert('시작 공금과 4명 이름을 확인해 주세요.');return}state.name=sName.value.trim()||DEFAULT.name;state.startFundKrw=fund;state.members=ms;persist();closeModal('settingsModal')}
+if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});render();
 </script>
 </body>
 </html>
