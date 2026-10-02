@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#111827">
+<link rel="manifest" href="manifest.json">
+<title>아우디 교토에 가다</title>
+<style>
+:root{--bg:#f4f6f8;--card:#fff;--text:#111827;--muted:#6b7280;--line:#e5e7eb;--accent:#111827;--danger:#dc2626}
+*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif}
+.app{max-width:760px;margin:0 auto;padding:18px 14px 110px}
+header{padding:8px 4px 16px}.eyebrow{font-size:12px;color:var(--muted);font-weight:700;letter-spacing:.04em}.title{font-size:28px;font-weight:900;margin:5px 0}.sub{color:var(--muted);font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:12px 0}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 2px 10px rgba(0,0,0,.03)}
+.kpi-label{font-size:12px;color:var(--muted);font-weight:700}.kpi{font-size:22px;font-weight:900;margin-top:6px}
+.section-title{font-size:17px;font-weight:900;margin:22px 2px 10px}.row{display:flex;justify-content:space-between;gap:8px;align-items:center}.muted{color:var(--muted)}
+.progress{height:10px;background:#eef0f3;border-radius:999px;overflow:hidden;margin-top:10px}.progress>div{height:100%;width:0;background:#111827;border-radius:999px}
+.actions{display:flex;gap:8px;position:sticky;bottom:14px;z-index:5;margin-top:20px}.btn{border:0;border-radius:14px;padding:13px 15px;font-weight:800;font-size:15px;cursor:pointer}.primary{background:#111827;color:#fff;flex:1}.secondary{background:#fff;border:1px solid var(--line)}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:11px 5px;border-bottom:1px solid var(--line);text-align:left}th{color:var(--muted);font-size:11px}
+.empty{padding:28px 10px;text-align:center;color:var(--muted)}
+.member{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line)}.member:last-child{border-bottom:0}
+.badge{font-size:11px;padding:5px 8px;border-radius:999px;background:#f1f5f9;color:#475569}
+.btnsmall{padding:7px 9px;border:1px solid var(--line);background:#fff;border-radius:10px;font-size:12px;font-weight:700}
+.modal{position:fixed;inset:0;background:rgba(15,23,42,.5);display:none;align-items:flex-end;justify-content:center;z-index:20}.modal.show{display:flex}.sheet{width:min(760px,100%);max-height:92vh;overflow:auto;background:#fff;border-radius:24px 24px 0 0;padding:20px 16px calc(20px + env(safe-area-inset-bottom))}
+label{display:block;font-size:12px;font-weight:800;margin:12px 0 7px}input,select{width:100%;padding:12px 13px;border:1px solid var(--line);border-radius:12px;font-size:15px;background:#fff}
+.form-actions{display:flex;gap:8px;margin-top:18px}.form-actions button{flex:1}
+.chips{display:flex;flex-wrap:wrap;gap:8px}.chip input{display:none}.chip span{display:block;padding:9px 11px;border:1px solid var(--line);border-radius:999px;font-size:13px;cursor:pointer}.chip input:checked+span{background:#111827;color:#fff;border-color:#111827}
+.note{font-size:12px;color:var(--muted);line-height:1.5;margin-top:7px}.danger{color:var(--danger)}
+@media(min-width:700px){.grid{grid-template-columns:repeat(4,1fr)}}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+<div class="eyebrow">KYOTO • 2박 3일</div>
+<div class="title">아우디 교토에 가다 🇯🇵</div>
+<div class="sub">공금으로 여행 경비를 관리해요</div>
+</header>
+
+<div class="grid">
+  <div class="card"><div class="kpi-label">현재 공금</div><div class="kpi" id="fundKpi">¥0</div></div>
+  <div class="card"><div class="kpi-label">총 사용액</div><div class="kpi" id="spentKpi">¥0</div></div>
+  <div class="card"><div class="kpi-label">남은 공금</div><div class="kpi" id="remainKpi">¥0</div></div>
+  <div class="card"><div class="kpi-label">1인 초과부담</div><div class="kpi" id="shareKpi">¥0</div></div>
+</div>
+
+<div class="card">
+  <div class="row"><strong>공금 사용 현황</strong><span id="percent" class="muted">0%</span></div>
+  <div class="progress"><div id="progress"></div></div>
+  <div class="note">공금이 부족해지면 초과분만 4명이 1/4씩 부담합니다.</div>
+</div>
+
+<div class="section-title">카테고리별 지출</div>
+<div class="card" id="categories"></div>
+
+<div class="section-title">지출 내역</div>
+<div class="card">
+  <div class="row" style="margin-bottom:10px"><span class="muted" id="countText">0건</span><button class="btnsmall" onclick="openFund()">공금 수정</button></div>
+  <div id="expenses"></div>
+</div>
+
+<div class="section-title">멤버</div>
+<div class="card" id="members"></div>
+
+<div class="actions">
+  <button class="btn primary" onclick="openExpense()">＋ 지출 추가</button>
+  <button class="btn secondary" onclick="openSettings()">⚙️ 설정</button>
+</div>
+</div>
+
+<div class="modal" id="expenseModal">
+<div class="sheet">
+<h3 style="margin:0 0 4px">지출 추가</h3><div class="note">이번 버전은 공금 사용만 관리하므로 누가 썼는지는 정산에 반영하지 않아요.</div>
+<label>날짜</label><input id="eDate" type="date">
+<label>카테고리</label><select id="eCat"><option>식비</option><option>교통</option><option>숙박</option><option>관광</option><option>쇼핑</option><option>기타</option></select>
+<label>내용</label><input id="eDesc" placeholder="예: 교토역 저녁">
+<label>금액 (JPY)</label><input id="eAmt" type="number" inputmode="numeric" min="0" step="1" placeholder="18000">
+<div class="form-actions"><button class="btn secondary" onclick="closeModal('expenseModal')">취소</button><button class="btn primary" onclick="saveExpense()">저장</button></div>
+</div></div>
+
+<div class="modal" id="fundModal">
+<div class="sheet">
+<h3 style="margin:0 0 4px">공금 수정</h3><div class="note">공금 자체가 변동될 때 언제든 수정하세요. 기존 지출 내역은 유지됩니다.</div>
+<label>현재 공금 (JPY)</label><input id="fundInput" type="number" inputmode="numeric" min="0" step="1">
+<div class="form-actions"><button class="btn secondary" onclick="closeModal('fundModal')">취소</button><button class="btn primary" onclick="saveFund()">저장</button></div>
+</div></div>
+
+<div class="modal" id="settingsModal">
+<div class="sheet">
+<h3 style="margin:0 0 4px">설정</h3>
+<label>모임명</label><input id="nameInput">
+<label>환율 (1 JPY = KRW)</label><input id="rateInput" type="number" inputmode="decimal" step="0.01">
+<label>멤버 이름</label>
+<div id="memberInputs"></div>
+<div class="note">데이터는 이 브라우저에 저장됩니다. 여행 중 같은 기기에서 계속 사용하세요.</div>
+<div class="form-actions"><button class="btn secondary" onclick="closeModal('settingsModal')">취소</button><button class="btn primary" onclick="saveSettings()">저장</button></div>
+</div></div>
+
+<script>
+const KEY="audiKyotoTripV2";
+const defaults={name:"아우디 교토에 가다",fund:1032818,rate:9.2,members:["정아","진희","솔아","은비"],expenses:[]};
+let state=load();
+function load(){try{return Object.assign({},defaults,JSON.parse(localStorage.getItem(KEY)||"{}"))}catch(e){return {...defaults}}}
+function persist(){localStorage.setItem(KEY,JSON.stringify(state)); render();}
+const yen=n=>new Intl.NumberFormat('ja-JP').format(Math.round(n||0));
+function render(){
+document.title=state.name;
+document.querySelector('.title').textContent=state.name+" 🇯🇵";
+const spent=state.expenses.reduce((s,e)=>s+Number(e.amount||0),0), remain=state.fund-spent, over=Math.max(0,-remain), share=Math.ceil(over/state.members.length);
+fundKpi.textContent="¥"+yen(state.fund); spentKpi.textContent="¥"+yen(spent); remainKpi.textContent=(remain<0?"-":"")+"¥"+yen(Math.abs(remain)); shareKpi.textContent="¥"+yen(share);
+const pct=state.fund?Math.round(spent/state.fund*100):0; percent.textContent=pct+"%"; progress.style.width=Math.min(100,pct)+"%";
+const cats={}; state.expenses.forEach(e=>cats[e.category]=(cats[e.category]||0)+Number(e.amount||0));
+categories.innerHTML=Object.keys(cats).length?Object.entries(cats).map(([k,v])=>`<div style="margin:9px 0"><div class="row"><span>${k}</span><strong>¥${yen(v)}</strong></div><div class="progress"><div style="width:${spent?Math.round(v/spent*100):0}%"></div></div></div>`).join(""):`<div class="empty">아직 지출이 없어요.</div>`;
+countText.textContent=state.expenses.length+"건";
+expenses.innerHTML=state.expenses.length?`<table><thead><tr><th>날짜</th><th>내용</th><th>분류</th><th style="text-align:right">금액</th><th></th></tr></thead><tbody>${[...state.expenses].reverse().map(e=>`<tr><td>${e.date}</td><td>${esc(e.desc)}</td><td>${e.category}</td><td style="text-align:right">¥${yen(e.amount)}</td><td style="text-align:right"><button class="btnsmall danger" onclick="removeExpense('${e.id}')">삭제</button></td></tr>`).join("")}</tbody></table>`:`<div class="empty">지출을 추가해 보세요 😊</div>`;
+members.innerHTML=state.members.map(m=>`<div class="member"><span>👤 ${esc(m)}</span><span class="badge">공금 공동부담</span></div>`).join("");
+}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
+function openExpense(){eDate.value=new Date().toISOString().slice(0,10);eDesc.value="";eAmt.value="";expenseModal.classList.add("show")}
+function openFund(){fundInput.value=state.fund;fundModal.classList.add("show")}
+function openSettings(){nameInput.value=state.name;rateInput.value=state.rate;memberInputs.innerHTML=state.members.map((m,i)=>`<div style="display:flex;gap:8px;margin:6px 0"><input data-mi="${i}" value="${esc(m)}" style="flex:1"></div>`).join("");settingsModal.classList.add("show")}
+function closeModal(id){document.getElementById(id).classList.remove("show")}
+function saveExpense(){const amount=Number(eAmt.value); if(!amount||amount<0){alert("금액을 입력해 주세요.");return} state.expenses.push({id:Date.now().toString(),date:eDate.value||new Date().toISOString().slice(0,10),category:eCat.value,desc:eDesc.value.trim()||"지출",amount}); persist(); closeModal("expenseModal")}
+function removeExpense(id){state.expenses=state.expenses.filter(e=>e.id!==id);persist()}
+function saveFund(){const v=Number(fundInput.value); if(v<0||Number.isNaN(v)){alert("공금을 확인해 주세요.");return} state.fund=v;persist();closeModal("fundModal")}
+function saveSettings(){state.name=nameInput.value.trim()||defaults.name;state.rate=Number(rateInput.value)||defaults.rate;state.members=[...document.querySelectorAll("[data-mi]")].map(x=>x.value.trim()).filter(Boolean);if(state.members.length!==4){alert("멤버는 4명으로 유지해 주세요.");return}persist();closeModal("settingsModal")}
+render();
+if("serviceWorker" in navigator){navigator.serviceWorker.register("sw.js").catch(()=>{})}
+</script>
+</body>
+</html>
